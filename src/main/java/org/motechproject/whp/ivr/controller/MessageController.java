@@ -1,4 +1,4 @@
-package org.motechproject.whp.ivr.messages;
+package org.motechproject.whp.ivr.controller;
 
 import org.motechproject.ivr.kookoo.KooKooIVRContext;
 import org.motechproject.ivr.kookoo.KookooIVRResponseBuilder;
@@ -11,15 +11,15 @@ import java.util.List;
 
 public class MessageController {
 
-    private Block1 ivrMessageBlock1;
-    private Block2 ivrMessageBlock2;
-    private Block3 ivrMessageBlock3;
-    private Block4 ivrMessageBlock4;
+    private MessageBlock1 ivrMessageBlock1;
+    private MessageBlock2 ivrMessageBlock2;
+    private MessageBlock3 ivrMessageBlock3;
+    private MessageBlock4 ivrMessageBlock4;
     public MessageController(){
-         ivrMessageBlock1 = new Block1();
-         ivrMessageBlock2 = new Block2();
-         ivrMessageBlock3 = new Block3();
-         ivrMessageBlock4 = new Block4();
+         ivrMessageBlock1 = new MessageBlock1();
+         ivrMessageBlock2 = new MessageBlock2();
+         ivrMessageBlock3 = new MessageBlock3();
+         ivrMessageBlock4 = new MessageBlock4();
     }
 
     public void routeMessage(KookooIVRResponseBuilder ivrResponseBuilder, List<String> patientIds, KooKooIVRContext kooKooIVRContext, IVRAdherenceResponse adherenceResponse, boolean validInput) {

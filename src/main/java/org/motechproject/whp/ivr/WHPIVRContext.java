@@ -8,6 +8,7 @@ import org.motechproject.ivr.kookoo.KookooRequest;
 import org.motechproject.ivr.kookoo.eventlogging.CallEventConstants;
 import org.motechproject.ivr.model.CallDirection;
 import org.motechproject.util.Cookies;
+import org.motechproject.whp.ivr.domain.CallState;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;

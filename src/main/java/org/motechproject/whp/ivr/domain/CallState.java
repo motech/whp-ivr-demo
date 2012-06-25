@@ -1,4 +1,4 @@
-package org.motechproject.whp.ivr;
+package org.motechproject.whp.ivr.domain;
 
 public enum CallState {
     STARTED, AUTHENTICATED, ALL_TREES_COMPLETED, SYMPTOM_REPORTING, SYMPTOM_REPORTING_TREE, OUTBOX, HEALTH_TIPS, END_OF_FLOW;

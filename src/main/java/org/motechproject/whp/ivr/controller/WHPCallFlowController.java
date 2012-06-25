@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import org.motechproject.decisiontree.model.Tree;
 import org.motechproject.ivr.kookoo.KooKooIVRContext;
 import org.motechproject.ivr.kookoo.extensions.CallFlowController;
-import org.motechproject.whp.ivr.CallState;
+import org.motechproject.whp.ivr.domain.CallState;
 import org.motechproject.whp.ivr.WHPIVRContext;
 import org.motechproject.whp.ivr.common.ControllerURLs;
 import org.springframework.stereotype.Component;

@@ -2,24 +2,34 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>motech-whp</artifactId>
-        <groupId>org.motechproject.whp</groupId>
-        <version>0.1-SNAPSHOT</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
-    <name>whp-ivr</name>
+
+    <groupId>whp-ivr-demo</groupId>
+    <artifactId>whp-ivr-demo</artifactId>
+    <version>1.0</version>
     <packaging>war</packaging>
 
-    <groupId>org.motechproject.whp</groupId>
-    <artifactId>whp.ivr</artifactId>
-    <version>0.1-SNAPSHOT</version>
 
-    <properties>
-        <build.dir>../build</build.dir>
-        <spring.version>3.0.5.RELEASE</spring.version>
-        <motech.version>0.10-SNAPSHOT</motech.version>
-    </properties>
+    <repositories>
+        <repository>
+            <id>motech-repo</id>
+            <name>MoTeCH Maven Repository</name>
+            <url>http://nexus.motechproject.org/content/repositories/public</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+
+            <id>motech-repo</id>
+            <name>MoTeCH Maven Repository</name>
+            <url>http://nexus.motechproject.org/content/repositories/public</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
 
     <dependencies>
         <dependency>
@@ -143,6 +153,18 @@
 
     </dependencies>
 
+    <properties>
+        <spring.version>3.0.5.RELEASE</spring.version>
+        <slf4j.version>1.6.1</slf4j.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring-security.version>3.0.5.RELEASE</spring-security.version>
+        <build.dir>build</build.dir>
+        <motech.version>0.10.1-SNAPSHOT</motech.version>
+        <motech.contrib.version>0.1-SNAPSHOT</motech.contrib.version>
+        <motech.delivery.version>0.3-SNAPSHOT</motech.delivery.version>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -186,4 +208,5 @@
         </plugins>
     </build>
 
+    
 </project>

@@ -10,17 +10,22 @@ import org.motechproject.whp.ivr.domain.IVRAdherenceResponse;
 import java.util.Iterator;
 import java.util.List;
 
-public class Block3 {
+public class MessageBlock3 {
     public static final String completionMessage1 = "001_03_01_completionMessage1";
     public static final String replayAdherence = "001_03_02_replayAdherence";
     public static final String adherence = "001_03_04_adherence";
     public static final String skipped = "001_03_06_completionMessage2";
-    public static final String nextPatient = "001_003_07_nextPatient";
+    public static final String nextPatient = "001_03_07_nextPatient";
 
     public BlockCompleteStatus buildMessage(KookooIVRResponseBuilder ivrResponseBuilder, List<String> patientIds, KooKooIVRContext kooKooIVRContext, IVRAdherenceResponse adherenceResponse) {
         ivrResponseBuilder.withPlayAudios(completionMessage1);
         ivrResponseBuilder.withPlayAudios(replayAdherence);
 
+        playMessagesForAllPatients(ivrResponseBuilder, patientIds, adherenceResponse);
+        return BlockCompleteStatus.Complete;
+    }
+
+    private void playMessagesForAllPatients(KookooIVRResponseBuilder ivrResponseBuilder, List<String> patientIds, IVRAdherenceResponse adherenceResponse) {
         for (int i = 0; i < patientIds.size(); i++) {
             String patientId = patientIds.get(i);
             List<String> allNumberFileNames = WHPIVRMessage.getAllFileNames(patientId);
@@ -28,19 +33,22 @@ public class Block3 {
             ivrResponseBuilder.withPlayAudios(adherence);
 
             String adherence = adherenceForPatient(patientId, adherenceResponse);
-            if(adherence.equals("*"))
-                ivrResponseBuilder.withPlayAudios(skipped);
-            else {
-                try{
-                    int adherenceNo = Integer.parseInt(adherence);
-                    ivrResponseBuilder.withPlayAudios(WHPIVRMessage.getNumberFilename(adherenceNo));
-                }catch(Exception e){
-                }
-            }
+            processSkipMessage(ivrResponseBuilder, adherence);
             if((i+1) < patientIds.size())
                 ivrResponseBuilder.withPlayAudios(nextPatient);
         }
-          return BlockCompleteStatus.Complete;
+    }
+
+    private void processSkipMessage(KookooIVRResponseBuilder ivrResponseBuilder, String adherence) {
+        if(adherence.equals("*"))
+            ivrResponseBuilder.withPlayAudios(skipped);
+        else {
+            try{
+                int adherenceNo = Integer.parseInt(adherence);
+                ivrResponseBuilder.withPlayAudios(WHPIVRMessage.getNumberFilename(adherenceNo));
+            }catch(Exception e){
+            }
+        }
     }
 
     private String adherenceForPatient(String patientId, IVRAdherenceResponse adherenceResponse) {

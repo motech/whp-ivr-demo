@@ -3,7 +3,7 @@ package org.motechproject.whp.ivr.call;
 import org.motechproject.ivr.service.CallRequest;
 import org.motechproject.ivr.service.IVRService;
 import org.motechproject.whp.ivr.domain.IVRAdherenceResponse;
-import org.motechproject.whp.ivr.util.StringUtil;
+import org.motechproject.whp.ivr.common.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package org.motechproject.whp.ivr.controller;
+package org.motechproject.whp.ivr.common.mapper;
 
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package org.motechproject.whp.ivr.util;
+package org.motechproject.whp.ivr.common.util;
 
 
 import org.apache.commons.lang.StringUtils;

@@ -10,13 +10,11 @@ import org.motechproject.ivr.kookoo.service.KookooCallDetailRecordsService;
 import org.motechproject.ivr.message.IVRMessage;
 import org.motechproject.outbox.api.service.VoiceOutboxService;
 import org.motechproject.whp.ivr.WHPIVRContext;
-import org.motechproject.whp.ivr.WHPIVRMessage;
 import org.motechproject.whp.ivr.common.ControllerURLs;
+import org.motechproject.whp.ivr.common.mapper.PatientMapper;
 import org.motechproject.whp.ivr.domain.IVRAdherence;
 import org.motechproject.whp.ivr.domain.IVRAdherenceResponse;
-import org.motechproject.whp.ivr.messages.MessageController;
-import org.motechproject.whp.ivr.messages.blocks.Block1;
-import org.motechproject.whp.ivr.messages.blocks.Block2;
+import org.motechproject.whp.ivr.messages.blocks.MessageBlock1;
 import org.motechproject.whp.ivr.outbox.context.OutboxContext;
 import org.motechproject.whp.ivr.repository.AllIVRResponses;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +33,7 @@ public class OutboxController extends SafeIVRController {
     MessageController messageController;
     AllIVRResponses ivrResponses;
     public static final String SIGNATURE_MUSIC = "signature_music";
-    Block1 block1;
+    MessageBlock1 block1;
 
 
     @Autowired
@@ -50,7 +48,7 @@ public class OutboxController extends SafeIVRController {
         messageController = new MessageController();
         this.ivrResponses = ivrResponses;
 
-        block1 = new Block1();
+        block1 = new MessageBlock1();
     }
 
     @Override
@@ -61,6 +59,7 @@ public class OutboxController extends SafeIVRController {
 
         String patientId = patientIds.get(0);
         logger.info("Patient id " + patientId);
+
 
         KookooIVRResponseBuilder ivrResponseBuilder = new KookooIVRResponseBuilder().withDefaultLanguage();
         ivrResponseBuilder.withPlayAudios(SIGNATURE_MUSIC);
@@ -79,15 +78,6 @@ public class OutboxController extends SafeIVRController {
         String userInput = kooKooIVRContext.userInput();
         boolean isValidInput = true;
 
-        try {
-            if (Integer.parseInt(userInput) > 7)
-                isValidInput = false;
-
-        } catch (Exception e) {
-            if (!"*".equals(userInput))
-                isValidInput = false;
-
-        }
         String lastPatientId = kooKooIVRContext.cookies().getValue(WHPIVRContext.PATIENT_ID);
         String providerNo = kooKooIVRContext.cookies().getValue(WHPIVRContext.PROVIDER_NO);
 
@@ -98,12 +88,26 @@ public class OutboxController extends SafeIVRController {
         KookooIVRResponseBuilder ivrResponseBuilder = new KookooIVRResponseBuilder().withDefaultLanguage();
         List<String> patientIds = patientMapper.patientIds(providerNo);
 
+        isValidInput = validateInputs(userInput, isValidInput);
         messageController.routeMessage(ivrResponseBuilder, patientIds, kooKooIVRContext, adherenceResponse, isValidInput);
 
         logger.info("Patient id retrieved from session " + lastPatientId);
         logger.info("User input is  " + userInput);
 
         return ivrResponseBuilder;
+    }
+
+    private boolean validateInputs(String userInput, boolean validInput) {
+        try {
+            if (Integer.parseInt(userInput) > 7)
+                validInput = false;
+
+        } catch (Exception e) {
+            if (!"*".equals(userInput))
+                validInput = false;
+
+        }
+        return validInput;
     }
 
     private IVRAdherenceResponse saveAdherence(String userInput, String lastPatientId, String providerNo, String ivrResponseId) {

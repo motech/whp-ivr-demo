@@ -10,7 +10,7 @@ import org.motechproject.whp.ivr.domain.IVRAdherenceResponse;
 import java.util.Iterator;
 import java.util.List;
 
-public class MessageBlock3 {
+public class CompletionSummaryBlock {
     public static final String completionMessage1 = "001_03_01_completionMessage1";
     public static final String replayAdherence = "001_03_02_replayAdherence";
     public static final String adherence = "001_03_04_adherence";
@@ -47,6 +47,7 @@ public class MessageBlock3 {
                 int adherenceNo = Integer.parseInt(adherence);
                 ivrResponseBuilder.withPlayAudios(WHPIVRMessage.getNumberFilename(adherenceNo));
             }catch(Exception e){
+                //add exception message to be played
             }
         }
     }

@@ -28,7 +28,7 @@ public class WHPIVRContext {
     private KooKooIVRContext kooKooIVRContext;
     public static final String PROVIDER_NO = "providerNo";
 
-    public static final String BLOCK_2 = "BLOCK2";
+    public static final String BLOCK_ADHERENCE_CAPTURE = "BLOCK2";
 
 
 

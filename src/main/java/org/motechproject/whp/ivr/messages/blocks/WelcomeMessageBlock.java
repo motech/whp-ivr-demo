@@ -6,7 +6,7 @@ import org.motechproject.whp.ivr.WHPIVRMessage;
 
 import java.util.List;
 
-public class MessageBlock1 {
+public class WelcomeMessageBlock {
     public static final String  welcome_message= "001_01_01_welcomeMessage";
     public static final String  instructional_message_1= "001_01_02_instructionalMessage1";
     public static final String  instructional_message_2= "001_01_04_instructionalMessage2";

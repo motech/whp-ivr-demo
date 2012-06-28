@@ -9,7 +9,7 @@ import org.motechproject.whp.ivr.outbox.context.OutboxContext;
 
 import java.util.List;
 
-public class MessageBlock2 {
+public class AdherenceCaptureBlock {
     public static final String instructional_message_3 = "001_02_01_instructionalMessage3";
     public static final String patientList = "001_02_02_patientList";   //"PatientNo"
     public static final String enterAdherence = "001_02_05_enterAdherence";
@@ -34,15 +34,15 @@ public class MessageBlock2 {
         kooKooIVRContext.cookies().add(WHPIVRContext.PATIENT_ID, patientId);
 
         kooKooIVRContext.cookies().add(OutboxContext.LAST_PLAYED_VOICE_MESSAGE_ID, enterAdherence);
-        kooKooIVRContext.cookies().add(OutboxContext.LAST_PLAYED_BLOCK_ID, WHPIVRContext.BLOCK_2);
+        kooKooIVRContext.cookies().add(OutboxContext.LAST_PLAYED_BLOCK_ID, WHPIVRContext.BLOCK_ADHERENCE_CAPTURE);
     }
 
     public BlockCompleteStatus buildMessage(KookooIVRResponseBuilder ivrResponseBuilder, List<String> patientIds, KooKooIVRContext kooKooIVRContext, boolean validInput) {
 
         String lastPlayedpatientNo = kooKooIVRContext.cookies().getValue(OutboxContext.LAST_PLAYED_PATIENT_NO);
-        String lastPlayedMessageId = kooKooIVRContext.cookies().getValue(OutboxContext.LAST_PLAYED_VOICE_MESSAGE_ID);
 
         int currentMessageId = Integer.valueOf(lastPlayedpatientNo) ;
+        String patientId = patientIds.get(currentMessageId - 1);
 
         if(validInput) {
             currentMessageId++;
@@ -51,13 +51,11 @@ public class MessageBlock2 {
         if (currentMessageId <= patientIds.size()) {
             ivrResponseBuilder.withPlayAudios(patientList);
             ivrResponseBuilder.withPlayAudios(WHPIVRMessage.getNumberFilename(currentMessageId));
-            String patientId = patientIds.get(currentMessageId - 1);
             List<String> allNumberFileNames = WHPIVRMessage.getAllFileNames(patientId);
             ivrResponseBuilder.withPlayAudios(allNumberFileNames.toArray(new String[allNumberFileNames.size()]));
             ivrResponseBuilder.withPlayAudios(enterAdherence).collectDtmfLength(1);
 
             addCallStateDataForMessageToContext(kooKooIVRContext, currentMessageId, patientId);
-
             return BlockCompleteStatus.InProgress;
         }
         return BlockCompleteStatus.Complete;
